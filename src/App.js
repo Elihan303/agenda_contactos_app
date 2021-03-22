@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MaskedInput from 'react-text-mask'
+import validar_email from'./validation'
 import {
   Table,
   Button,
@@ -29,12 +31,12 @@ class App extends React.Component {
       telefono: "",
       correo: ""
     },
-    busqueda:'',
-    contactos:[]
+    busqueda: '',
+    contactos: []
   };
 
   //Buscar
-  BuscarOnChange= async (e)=>{
+  BuscarOnChange = async (e) => {
     e.persist();
     await this.setState({
       busqueda: e.target.value
@@ -42,20 +44,20 @@ class App extends React.Component {
     this.filtrarContactos();
   }
 
-  
-  filtrarContactos=()=>{
-    let search= data.filter((e)=>{
-      if (e.nombre.includes(this.state.busqueda)||
-      e.apellido.includes(this.state.busqueda)
-      )  { return e}
+
+  filtrarContactos = () => {
+    let search = data.filter((e) => {
+      if (e.nombre.includes(this.state.busqueda) ||
+        e.apellido.includes(this.state.busqueda)
+      ) { return e }
     })
     this.setState({
-       contactos: search
+      contactos: search
     })
   }
 
-  componentDidMount(){
-    this.setState({contactos: data})
+  componentDidMount() {
+    this.setState({ contactos: data })
   }
 
   //Buscar
@@ -114,12 +116,30 @@ class App extends React.Component {
     }
   };
 
-  insertar = () => {
-    var valorNuevo = { ...this.state.form };
-    valorNuevo.id = this.state.data.length + 1;
-    var lista = this.state.data;
-    lista.push(valorNuevo);
-    this.setState({ modalInsertar: false, data: lista });
+  // insertar = () => {
+  //   var valorNuevo = { ...this.state.form };
+  //   valorNuevo.id = this.state.data.length + 1;
+  //   var lista = this.state.data;
+  //   lista.push(valorNuevo);
+  //   this.setState({ modalInsertar: false, data: lista });
+  // }
+
+  insertar= ()=>{
+    let valorNuevo= {...this.state.form};
+    valorNuevo.id=this.state.data.length+1;
+    let lista= this.state.data;
+    let contenido = this.state.form;
+    if (!validar_email(contenido.correo)){
+      alert('correo no valido');
+    }else if(contenido.nombre = null){
+      alert('Todos los campos son obligatorios');
+    }
+    else
+    {
+      lista.push(valorNuevo);
+      this.setState({ modalInsertar: false, data: lista });
+    }
+    
   }
 
   handleChange = (e) => {
@@ -130,13 +150,13 @@ class App extends React.Component {
       },
     });
   };
- //funciones 
+  //funciones 
   render() {
 
     return (
       <>
-       
-    
+
+
         <header className="border ">
           <nav className="navbar navbar-expand-lg navbar-light  justify-content-between container ">
             <h2>
@@ -170,8 +190,8 @@ class App extends React.Component {
               </form>
             </div>
           </nav>
-        </header> 
-        
+        </header>
+
         <Container>
           <br />
           <Button color="success" onClick={() => this.mostrarModalInsertar()}>Crear</Button>
@@ -217,7 +237,7 @@ class App extends React.Component {
           <ModalHeader>
             <div><h3>Editar Registro</h3></div>
           </ModalHeader>
-          
+
           <ModalBody>
             <FormGroup>
               <label>
@@ -338,11 +358,21 @@ class App extends React.Component {
               <label>
                 Telefono:
               </label>
-              <input
+              {/* <input
                 className="form-control"
                 name="telefono"
                 type="text"
                 onChange={this.handleChange}
+              /> */}
+              <MaskedInput
+                type="text"
+                className="form-control"
+                id='email'
+                name="telefono"
+                onChange={this.handleChange}
+                mask={['(', /[0-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                guide={true} showMask={true}
+                value={this.state.form.telefono}
               />
             </FormGroup>
             <FormGroup>
@@ -375,15 +405,15 @@ class App extends React.Component {
             </Button>
           </ModalFooter>
         </Modal>
-       {/* Modal insertar contacto */}
-       
-       {/* footer */}
+        {/* Modal insertar contacto */}
+
+        {/* footer */}
         <div className="footer">
-                    <p className="footer_p">Copyright © 2010-2021
-                    TeamPicapollo
+          <p className="footer_p">Copyright © 2010-2021
+          TeamPicapollo
             Software</p>
         </div>
-       {/* footer */}
+        {/* footer */}
       </>
     );
   }
