@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 
 const data = [
-  { id: 1, nombre: "Naruto", apellido: "Uzumaki",telefono:"8096549315",correo:"nuevecolas@kiuby.com" },
+  { id: 1, nombre: "Naruto", apellido: "Uzumaki", telefono: "8096549315", correo: "nuevecolas@kiuby.com" },
 
 ];
 
@@ -68,7 +68,7 @@ class App extends React.Component {
   };
 
   eliminar = (dato) => {
-    var opcion = window.confirm("Estás Seguro que deseas Eliminar el elemento "+dato.id);
+    var opcion = window.confirm("Estás Seguro que deseas Eliminar el elemento " + dato.id);
     if (opcion == true) {
       var contador = 0;
       var arreglo = this.state.data;
@@ -82,10 +82,10 @@ class App extends React.Component {
     }
   };
 
-  insertar= ()=>{
-    var valorNuevo= {...this.state.form};
-    valorNuevo.id=this.state.data.length+1;
-    var lista= this.state.data;
+  insertar = () => {
+    var valorNuevo = { ...this.state.form };
+    valorNuevo.id = this.state.data.length + 1;
+    var lista = this.state.data;
     lista.push(valorNuevo);
     this.setState({ modalInsertar: false, data: lista });
   }
@@ -100,12 +100,48 @@ class App extends React.Component {
   };
 
   render() {
-    
+
     return (
       <>
+        <header className="border bg-light">
+          <nav className="navbar navbar-expand-lg navbar-light  justify-content-between container ">
+            <h2>
+              <a className="logo">AgendaMax </a>
+            </h2>
+
+            <div className="header__nav">
+
+              <nav>
+                <a className="header_nav_a" href="https://www.youtube.com/channel/UCj31CP1tmMZkf6jVgdfhIgQ">Youtube</a>
+                <a className="header_nav_a" href="https://twitter.com/Jcod37954758">Twitter</a>
+                <a className="header_nav_a" href="https://www.instagram.com/junior.eddn17/">Instagram</a>
+                <a className="header_nav_a" href="https://github.com/Elihan303/agenda_contantos.git">Github</a>
+              </nav>
+
+            </div>
+
+
+            <div className="form-inline my-2 my-lg-0 flex-column" >
+              <form onSubmit={this.BuscarContacto}>
+                <input className="form-control mr-sm-2"
+                  type="search" id='buscarCliente'
+                  placeholder="pulsar enter para buscar"
+                  aria-label="Search"
+                  onChange={this.CaptureFind}
+
+                >
+
+                </input>
+
+              </form>
+            </div>
+          </nav>
+        </header>
+
+
         <Container>
-        <br />
-          <Button color="success" onClick={()=>this.mostrarModalInsertar()}>Crear</Button>
+          <br />
+          <Button color="success" onClick={() => this.mostrarModalInsertar()}>Crear</Button>
           <br />
           <br />
           <Table>
@@ -135,7 +171,7 @@ class App extends React.Component {
                     >
                       Editar
                     </Button>{" "}
-                    <Button color="danger" onClick={()=> this.eliminar(dato)}>Eliminar</Button>
+                    <Button color="danger" onClick={() => this.eliminar(dato)}>Eliminar</Button>
                   </td>
                 </tr>
               ))}
@@ -145,7 +181,7 @@ class App extends React.Component {
 
         <Modal isOpen={this.state.modalActualizar}>
           <ModalHeader>
-           <div><h3>Editar Registro</h3></div>
+            <div><h3>Editar Registro</h3></div>
           </ModalHeader>
 
           <ModalBody>
@@ -161,10 +197,10 @@ class App extends React.Component {
                 value={this.state.form.id}
               />
             </FormGroup> */}
-            
+
             <FormGroup>
               <label>
-                Nombre: 
+                Nombre:
               </label>
               <input
                 className="form-control"
@@ -174,10 +210,10 @@ class App extends React.Component {
                 value={this.state.form.nombre}
               />
             </FormGroup>
-            
+
             <FormGroup>
               <label>
-                Apellido: 
+                Apellido:
               </label>
               <input
                 className="form-control"
@@ -189,7 +225,7 @@ class App extends React.Component {
             </FormGroup>
             <FormGroup>
               <label>
-                Telefono: 
+                Telefono:
               </label>
               <input
                 className="form-control"
@@ -202,7 +238,7 @@ class App extends React.Component {
 
             <FormGroup>
               <label>
-                Corrreo: 
+                Corrreo:
               </label>
               <input
                 className="form-control"
@@ -236,7 +272,7 @@ class App extends React.Component {
 
         <Modal isOpen={this.state.modalInsertar}>
           <ModalHeader>
-           <div><h3>Insertar Personaje</h3></div>
+            <div><h3>Insertar Personaje</h3></div>
           </ModalHeader>
 
           <ModalBody>
@@ -252,10 +288,10 @@ class App extends React.Component {
                 value={this.state.data.length+1}
               />
             </FormGroup> */}
-            
+
             <FormGroup>
               <label>
-                nombre: 
+                nombre:
               </label>
               <input
                 className="form-control"
@@ -264,10 +300,10 @@ class App extends React.Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-            
+
             <FormGroup>
               <label>
-                Apellido: 
+                Apellido:
               </label>
               <input
                 className="form-control"
@@ -279,7 +315,7 @@ class App extends React.Component {
 
             <FormGroup>
               <label>
-                Telefono: 
+                Telefono:
               </label>
               <input
                 className="form-control"
@@ -290,7 +326,7 @@ class App extends React.Component {
             </FormGroup>
             <FormGroup>
               <label>
-                Correo: 
+                Correo:
               </label>
               <input
                 className="form-control"
@@ -318,6 +354,13 @@ class App extends React.Component {
             </Button>
           </ModalFooter>
         </Modal>
+
+
+        <div className="footer">
+                    <p className="footer_p">Copyright © 2010-2021
+                    TeamPicapollo
+            Software</p>
+                </div>
       </>
     );
   }
