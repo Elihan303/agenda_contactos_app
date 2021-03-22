@@ -29,8 +29,38 @@ class App extends React.Component {
       telefono: "",
       correo: ""
     },
+    busqueda:'',
+    contactos:[]
   };
 
+  //Buscar
+  BuscarOnChange= async (e)=>{
+    e.persist();
+    await this.setState({
+      busqueda: e.target.value
+    })
+    this.filtrarContactos();
+  }
+
+  
+  filtrarContactos=()=>{
+    let search= data.filter((e)=>{
+      if (e.nombre.includes(this.state.busqueda)||
+      e.apellido.includes(this.state.busqueda)
+      )  { return e}
+    })
+    this.setState({
+       contactos: search
+    })
+  }
+
+  componentDidMount(){
+    this.setState({contactos: data})
+  }
+
+  //Buscar
+
+  //modales
   mostrarModalActualizar = (dato) => {
     this.setState({
       form: dato,
@@ -51,7 +81,9 @@ class App extends React.Component {
   cerrarModalInsertar = () => {
     this.setState({ modalInsertar: false });
   };
+  //  modales
 
+  //funciones 
   editar = (dato) => {
     var contador = 0;
     var arreglo = this.state.data;
@@ -98,12 +130,14 @@ class App extends React.Component {
       },
     });
   };
-
+ //funciones 
   render() {
 
     return (
       <>
-        <header className="border bg-light">
+       
+    
+        <header className="border ">
           <nav className="navbar navbar-expand-lg navbar-light  justify-content-between container ">
             <h2>
               <a className="logo">AgendaMax </a>
@@ -122,12 +156,12 @@ class App extends React.Component {
 
 
             <div className="form-inline my-2 my-lg-0 flex-column" >
-              <form onSubmit={this.BuscarContacto}>
+              <form >
                 <input className="form-control mr-sm-2"
                   type="search" id='buscarCliente'
-                  placeholder="pulsar enter para buscar"
+                  placeholder="Buscar"
                   aria-label="Search"
-                  onChange={this.CaptureFind}
+                  onChange={this.BuscarOnChange}
 
                 >
 
@@ -136,9 +170,8 @@ class App extends React.Component {
               </form>
             </div>
           </nav>
-        </header>
-
-
+        </header> 
+        
         <Container>
           <br />
           <Button color="success" onClick={() => this.mostrarModalInsertar()}>Crear</Button>
@@ -157,7 +190,7 @@ class App extends React.Component {
             </thead>
 
             <tbody>
-              {this.state.data.map((dato) => (
+              {this.state.contactos.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
                   <td>{dato.nombre}</td>
@@ -180,24 +213,12 @@ class App extends React.Component {
         </Container>
 
         <Modal isOpen={this.state.modalActualizar}>
+          {/* Modal Editar contacto */}
           <ModalHeader>
             <div><h3>Editar Registro</h3></div>
           </ModalHeader>
-
+          
           <ModalBody>
-            {/* <FormGroup>
-              <label>
-               Id:
-              </label>
-            
-              <input
-                className="form-control"
-                readOnly
-                type="text"
-                value={this.state.form.id}
-              />
-            </FormGroup> */}
-
             <FormGroup>
               <label>
                 Nombre:
@@ -267,12 +288,12 @@ class App extends React.Component {
             </Button>
           </ModalFooter>
         </Modal>
+        {/* Modal Editar contacto */}
 
-
-
+        {/* Modal insertar contacto */}
         <Modal isOpen={this.state.modalInsertar}>
           <ModalHeader>
-            <div><h3>Insertar Personaje</h3></div>
+            <div><h3>Insertar Contacto</h3></div>
           </ModalHeader>
 
           <ModalBody>
@@ -354,13 +375,15 @@ class App extends React.Component {
             </Button>
           </ModalFooter>
         </Modal>
-
-
+       {/* Modal insertar contacto */}
+       
+       {/* footer */}
         <div className="footer">
                     <p className="footer_p">Copyright © 2010-2021
                     TeamPicapollo
             Software</p>
-                </div>
+        </div>
+       {/* footer */}
       </>
     );
   }
