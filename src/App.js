@@ -1,6 +1,7 @@
 import React from "react";
-import "./App.css";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
 import MaskedInput from 'react-text-mask'
 import validar_email from'./validation'
 import {
@@ -16,6 +17,13 @@ import {
 
 const data = [
   { id: 1, nombre: "Naruto", apellido: "Uzumaki", telefono: "8096549315", correo: "nuevecolas@kiuby.com" },
+  { id: 2, nombre: "Sakura", apellido: "Konoha", telefono: "8097354565", correo: "nuevecolas@kiuby.com" },
+  { id: 3, nombre: "Neji", apellido: "Hyuga", telefono: "8093249243", correo: "nuevecolas@kiuby.com" },
+  { id: 4, nombre: "Rock", apellido: "Lee", telefono: "8093249243", correo: "nuevecolas@kiuby.com" },
+  { id: 5, nombre: "Sarutobi", apellido: "Hayamato", telefono: "8093249243", correo: "nuevecolas@kiuby.com" },
+  { id: 6, nombre: "Itachi", apellido: "Uchiha", telefono: "8093249243", correo: "nuevecolas@kiuby.com" },
+  { id: 7, nombre: "Kakashi", apellido: "Hatake", telefono: "8093249243", correo: "nuevecolas@kiuby.com" },
+  { id: 8, nombre: "Gai", apellido: "Sensei", telefono: "8093249243", correo: "nuevecolas@kiuby.com" },
 
 ];
 
@@ -116,31 +124,14 @@ class App extends React.Component {
     }
   };
 
-  // insertar = () => {
-  //   var valorNuevo = { ...this.state.form };
-  //   valorNuevo.id = this.state.data.length + 1;
-  //   var lista = this.state.data;
-  //   lista.push(valorNuevo);
-  //   this.setState({ modalInsertar: false, data: lista });
-  // }
-
-  insertar= ()=>{
-    let valorNuevo= {...this.state.form};
-    valorNuevo.id=this.state.data.length+1;
-    let lista= this.state.data;
-    let contenido = this.state.form;
-    if (!validar_email(contenido.correo)){
-      alert('correo no valido');
-    }else if(contenido.nombre = null){
-      alert('Todos los campos son obligatorios');
-    }
-    else
-    {
-      lista.push(valorNuevo);
-      this.setState({ modalInsertar: false, data: lista });
-    }
-    
+  insertar = () => {
+    var valorNuevo = { ...this.state.form };
+    valorNuevo.id = this.state.data.length + 1;
+    var lista = this.state.data;
+    lista.push(valorNuevo);
+    this.setState({ modalInsertar: false, data: lista });
   }
+
 
   handleChange = (e) => {
     this.setState({
@@ -157,7 +148,7 @@ class App extends React.Component {
       <>
 
 
-        <header className="border ">
+        <header className="heade" id="header">
           <nav className="navbar navbar-expand-lg navbar-light  justify-content-between container ">
             <h2>
               <a className="logo">AgendaMax </a>
@@ -169,7 +160,7 @@ class App extends React.Component {
                 <a className="header_nav_a" href="https://www.youtube.com/channel/UCj31CP1tmMZkf6jVgdfhIgQ">Youtube</a>
                 <a className="header_nav_a" href="https://twitter.com/Jcod37954758">Twitter</a>
                 <a className="header_nav_a" href="https://www.instagram.com/junior.eddn17/">Instagram</a>
-                <a className="header_nav_a" href="https://github.com/Elihan303/agenda_contantos.git">Github</a>
+                <a className="header_nav_a" href="https://github.com/Elihan303/agenda_contactos_app">Github</a>
               </nav>
 
             </div>
@@ -177,7 +168,7 @@ class App extends React.Component {
 
             <div className="form-inline my-2 my-lg-0 flex-column" >
               <form >
-                <input className="form-control mr-sm-2"
+                <input className="form-control mr-sm-2 inpunt_buscar "
                   type="search" id='buscarCliente'
                   placeholder="Buscar"
                   aria-label="Search"
@@ -193,6 +184,7 @@ class App extends React.Component {
         </header>
 
         <Container>
+          <div className='containerr'>
           <br />
           <Button color="success" onClick={() => this.mostrarModalInsertar()}>Crear</Button>
           <br />
@@ -230,9 +222,22 @@ class App extends React.Component {
               ))}
             </tbody>
           </Table>
+          </div>
+
+
+
+          
         </Container>
 
-        <Modal isOpen={this.state.modalActualizar}>
+        {/* footer */}
+        <div className="footer ">
+          <p className="footer_p">Copyright © 2010-2021
+          TeamPicapollo
+            Software</p>
+        </div>
+        {/* footer */}
+
+        <Modal isOpen={this.state.modalActualizar} className='modal_bg' >
           {/* Modal Editar contacto */}
           <ModalHeader>
             <div><h3>Editar Registro</h3></div>
@@ -311,28 +316,16 @@ class App extends React.Component {
         {/* Modal Editar contacto */}
 
         {/* Modal insertar contacto */}
-        <Modal isOpen={this.state.modalInsertar}>
+        <Modal isOpen={this.state.modalInsertar} className='modal_bg'>
           <ModalHeader>
             <div><h3>Insertar Contacto</h3></div>
           </ModalHeader>
 
           <ModalBody>
-            {/* <FormGroup>
-              <label>
-                Id: 
-              </label>
-              
-              <input
-                className="form-control"
-                readOnly
-                type="text"
-                value={this.state.data.length+1}
-              />
-            </FormGroup> */}
-
+           
             <FormGroup>
               <label>
-                nombre:
+                Nombre:
               </label>
               <input
                 className="form-control"
@@ -407,14 +400,10 @@ class App extends React.Component {
         </Modal>
         {/* Modal insertar contacto */}
 
-        {/* footer */}
-        <div className="footer">
-          <p className="footer_p">Copyright © 2010-2021
-          TeamPicapollo
-            Software</p>
-        </div>
-        {/* footer */}
+        
+
       </>
+      
     );
   }
 }
